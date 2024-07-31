@@ -15,17 +15,18 @@ def get_request(endpoint, **kwargs):
     params = ""
     if kwargs:
         for key, value in kwargs.items():
-            params += f"{key}={value}&"  # Use f-string for formatted string
+            params += f"{key}={value}&"
 
-    request_url = f"{backend_url}{endpoint}?{params[:-1]}"  # Remove trailing '&'
+    request_url = f"{backend_url}{endpoint}?{params[:-1]}" 
 
     print(f"GET from {request_url}")
     try:
         # Call get method of requests library with URL and parameters
         response = requests.get(request_url)
         return response.json()
-    except requests.exceptions.RequestException as err:  # Specific exception type
+    except requests.exceptions.RequestException as err:
         print("Network exception occurred:", err)
+
 
 def analyze_review_sentiments(text):
     request_url = f"{sentiment_analyzer_url}analyze/{text}"
@@ -37,11 +38,12 @@ def analyze_review_sentiments(text):
         print(f"Unexpected error: {err}, {type(err)}")
         print("Network exception occurred")
 
+
 def post_review(data_dict):
     request_url = f"{backend_url}/insert_review"
     try:
         response = requests.post(request_url, json=data_dict)
         print(response.json())
         return response.json()
-    except requests.exceptions.RequestException as err:  # Specific exception type
+    except requests.exceptions.RequestException as err:
         print("Network exception occurred:", err)
